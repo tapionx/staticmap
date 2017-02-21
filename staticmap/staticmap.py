@@ -4,6 +4,8 @@ from math import sqrt, log, tan, pi, cos, ceil, floor, atan, sinh
 import requests
 from PIL import Image, ImageDraw
 
+from geodesiclinestogis import GeodesicLine2Gisfile
+DEFALUT_KM_PTS = 10
 
 class Line:
     def __init__(self, coords, color, width, simplify=True):
@@ -20,6 +22,48 @@ class Line:
         :type simplify: bool
         """
         self.coords = coords
+        self.color = color
+        self.width = width
+        self.simplify = simplify
+
+    @property
+    def extent(self):
+        """
+        calculate the coordinates of the envelope / bounding box: (min_lon, min_lat, max_lon, max_lat)
+
+        :rtype: tuple
+        """
+        return (
+            min((c[0] for c in self.coords)),
+            min((c[1] for c in self.coords)),
+            max((c[0] for c in self.coords)),
+            max((c[1] for c in self.coords)),
+        )
+
+class GeodesicLine:
+    def __init__(self, coords, color, width, simplify=True):
+        """
+        Line that can be drawn in a static map
+
+        :param coords: an iterable of lon-lat pairs, e.g. ((0.0, 0.0), (175.0, 0.0), (175.0, -85.1))
+        :type coords: list
+        :param color: color suitable for PIL / Pillow
+        :type color: str
+        :param width: width in pixel
+        :type width: int
+        :param simplify: whether to simplify coordinates, looks less shaky, default is true
+        :type simplify: bool
+        """
+        
+        # since GeodesicLine2Gisfile needs a flat list of coords
+        # we need to unpack the given coords
+        unpacked_coords = []
+        for c in coords:
+            unpacked_coords.append(c[0])
+            unpacked_coords.append(c[1])
+
+        gtg = GeodesicLine2Gisfile()
+        self.coords = gtg.gdlComp(unpacked_coords, km_pts=DEFALUT_KM_PTS) 
         self.color = color
         self.width = width
         self.simplify = simplify

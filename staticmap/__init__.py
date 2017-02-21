@@ -1,1 +1,1 @@
-from .staticmap import StaticMap, CircleMarker, IconMarker, Line, Polygon
+from .staticmap import StaticMap, CircleMarker, IconMarker, Line, Polygon, GeodesicLine
