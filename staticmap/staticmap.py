@@ -84,17 +84,20 @@ class GeodesicLine:
 
 
 class CircleMarker:
-    def __init__(self, coord, color, width):
+    def __init__(self, coord, color, outline, width):
         """
         :param coord: a lon-lat pair, eg (175.0, 0.0)
         :type coord: tuple
         :param color: color suitable for PIL / Pillow
         :type color: str
+        :param color: color outline for PIL / Pillow
+        :type outline: str
         :param width: marker width
         :type width: int
         """
         self.coord = coord
         self.color = color
+        self.outline = outline
         self.width = width
 
     @property
@@ -121,6 +124,7 @@ class IconMarker:
     @property
     def extent_px(self):
         w, h = self.img.size
+        print("w",w,"h",h)
         return (
             self.offset[0],
             h - self.offset[1],
@@ -482,7 +486,7 @@ class StaticMap:
                 point[1] - circle.width,
                 point[0] + circle.width,
                 point[1] + circle.width
-            ), fill=circle.color)
+            ), fill=circle.color, outline= circle.outline)
 
         for polygon in self.polygons:
             points = [(
