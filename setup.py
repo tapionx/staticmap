@@ -13,7 +13,7 @@ setup(
     classifiers=[],
     install_requires=[
         'Pillow',
-        'requests'
+        'requests',
         'GeodesicLinesToGIS'
     ]
 )
