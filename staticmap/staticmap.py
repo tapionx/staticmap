@@ -124,7 +124,6 @@ class IconMarker:
     @property
     def extent_px(self):
         w, h = self.img.size
-        print("w",w,"h",h)
         return (
             self.offset[0],
             h - self.offset[1],
