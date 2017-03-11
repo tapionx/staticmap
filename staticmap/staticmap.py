@@ -4,7 +4,7 @@ from math import sqrt, log, tan, pi, cos, ceil, floor, atan, sinh
 import requests
 from PIL import Image, ImageDraw
 
-from geodesiclinestogis import GeodesicLine2Gisfile
+from geodesiclinestogis import geodesicline2gisfile
 DEFALUT_KM_PTS = 10
 
 class Line:
@@ -62,7 +62,7 @@ class GeodesicLine:
             unpacked_coords.append(c[0])
             unpacked_coords.append(c[1])
 
-        gtg = GeodesicLine2Gisfile()
+        gtg = geodesicline2gisfile()
         self.coords = gtg.gdlComp(unpacked_coords, km_pts=DEFALUT_KM_PTS) 
         self.color = color
         self.width = width
